@@ -33,6 +33,8 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const apiv1Controller = require('./controllers/apiv1');
+
 
 /**
  * API keys and Passport configuration.
@@ -131,6 +133,12 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+
+/**
+* Carpool api routes
+*/
+app.get('/api/v1/version',apiv1Controller.version);
+app.get('/api/v1/getDrivers',apiv1Controller.getDrivers);
 
 /**
  * API examples routes.
