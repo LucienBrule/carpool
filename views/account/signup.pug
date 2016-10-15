@@ -6,6 +6,13 @@ block content
   form.form-horizontal(id='signup-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
+      label.col-sm-3.control-label(for='usage') Usage
+      .col-sm-7
+        input-group
+          select.form-control.text-center(name="usage")
+            option.text-center="Guest"
+            option.text-center="Driver"
+    .form-group
       label.col-sm-3.control-label(for='email') Email
       .col-sm-7
         input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
