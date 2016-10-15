@@ -1,0 +1,42 @@
+
+Our chatbot should be able to parse certain inputs.
+
+See examples below for the chatbot to distinguish between
+	users and drivers.
+
+Maybe create two chatbots so there's no cross-talk (one for drivers and one
+	for users). Driver chatbot being a private chatbot while the user chatbot 
+	is relatively public.
+
+
+
+For [User]s:
+
+	Primary queries:
+
+	- "[need/looking for/can I get] a ride to [place] from [suggested place]"
+		-> followup question by chatbot:
+				"How many people are in your group (including you)?"
+
+	- "I got picked up by [driver name]"
+	- "....don't need a ride...."		("We don't need a ride anymore")
+
+
+	Secondary queries:
+	- 
+
+
+
+For [Driver]s:
+
+	Primary queries									examples
+
+	- "....starting...driving shift..." ("I'm starting my driving shift now")
+	- "....finished driving..."    		("I've finished driving for the night")
+	- "....picked up..."	 		 	("I've just picked up a group")
+
+
+	Secondary queries
+	- "....skipping group..."			("Took too long, skipping group")
+
+
