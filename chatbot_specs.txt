@@ -34,6 +34,7 @@ For [Driver]s:
 	- "....starting...driving shift..." ("I'm starting my driving shift now")
 	- "....finished driving..."    		("I've finished driving for the night")
 	- "....picked up..."	 		 	("I've just picked up a group")
+	- "....dropped of..."				("I've just dropped off a group")
 	- "....car can fit [x] people"		("My car can fit 4 people excluding myself")
 
 
