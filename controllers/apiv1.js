@@ -48,6 +48,17 @@ exports.emit_arbitrary_event = (req, res) => {
 	console.log("Emitting arbitrary event...", req.body.event, req.body.param);
 	return res.send(apiEmmiter.emit(req.body.event, req.body.param));
 }
+
+exports._get_drivers = () =>{
+	var dprom = Driver.find().exec();
+	dprom.then(function(drvrs) {
+			return(drvrs);
+		})
+		.catch(function(err) {
+			return(err);
+		});
+}
+
 exports.get_drivers = (req, res) => {
 	var dprom = Driver.find().exec();
 	dprom.then(function(drvrs) {
