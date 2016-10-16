@@ -58,6 +58,16 @@ module.exports.get_drivers = function(req, res) {
 			res.send(err.message);
 		});
 }
+module.exports.get_users = function {
+	var dprom = User.find().exec();
+	dprom.then(function(usrs) {
+			res.send(JSON.stringify(usrs));
+		})
+		.catch(function(err) {
+			res.send(err.message);
+		});
+
+}
 module.exports.assign_rider_to_arbitrary_car = function(req, res) {
 	var drvr = Driver.findOne({
 		email: req.query.d_email
@@ -117,6 +127,7 @@ module.exports.drop_off_car_by_email = function(req, res) {
 			return res.send(err.message);
 		});
 }
+
 module.exports.send_car_by_email = function(req, res) {
 	var drvr = Driver.findOne({
 		email: req.query.email
