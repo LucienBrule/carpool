@@ -75,7 +75,8 @@ exports.post_enroll = (req, res, next) => {
     availible: true,
     enroute: false,
     currentseats: req.body.numberseats,
-    minutestotimeout: 4
+    minutestotimeout: 4,
+    ridesgiven:0
   });
   console.log("got here");
   console.log(driver);

@@ -45,7 +45,8 @@ exports.get_route_riders = (req, res) => {
 	});
 }
 exports.emit_arbitrary_event = (req, res) => {
-	apiEmmiter.emit(req.body.event, req.body.param);
+	console.log("Emitting arbitrary event...", req.body.event, req.body.param);
+	return res.send(apiEmmiter.emit(req.body.event, req.body.param));
 }
 exports.get_drivers = (req, res) => {
 	var dprom = Driver.find().exec();
@@ -61,24 +62,31 @@ exports.assign_rider_to_arbitrary_car = (req, res) => {
 		email: req.query.d_email
 	}).exec();
 
-	drvr.then(function(drvr) {
-		if (drvr === null || drvr === undefined) {
+	drvr.then(function(drv) {
+		if (drv === null || drv === undefined) {
 			return res.send("no such driver found");
 		}
 		if (drvr.currentseats <= 0) {
 			return res.send("Cannot add , car is full");
 		}
-		var usr = Driver.findOne({
+		var usr = User.findOne({
 			email: req.query.u_email
-		}).exec;
+		}).exec();
 		usr.then(function(usr) {
-			drvr.riders.push(usr);
-			drvr.currentseats--;
+			if (usr === null || usr === undefined) {
+				return res.send("no such user found");
+			}
+			drv.riders.push(usr);
+			drv.currentseats--;
 			usr.scheduled = true;
-			drvr.save();
+			drv.save();
+			// console.log("Added");
+			return res.send(JSON.stringify(drv));
+		}).catch(function(err) {
+			return res.send(err.message);
 		});
 	}).catch(function(err) {
-		return res.send(err);
+		return res.send(err.message);
 	});
 }
 
@@ -88,13 +96,13 @@ exports.version = (req, res) => {
 	res.send(version);
 };
 exports.drop_off_car_by_email = (req, res) => {
-	drvr = Driver.findOne({
+	var drvr = Driver.findOne({
 		email: req.query.email
 	}).exec();
 
 	drvr.then(function(drvr) {
 			if (drvr === null || drvr === undefined) {
-				return req.send("No such driver found");
+				return res.send("No such driver found");
 			}
 			drvr.ridesgiven += 1;
 			drvr.riders = [];
@@ -102,21 +110,22 @@ exports.drop_off_car_by_email = (req, res) => {
 			drvr.availible = true;
 			drvr.enroute = false;
 			drvr.save();
+			return res.send(JSON.stringify(drvr));
 		})
 		.catch(function(err) {
 			return res.send(err.message);
 		});
 }
 exports.send_car_by_email = (req, res) => {
-	drvr = Driver.findOne({
+	var drvr = Driver.findOne({
 		email: req.query.email
 	}).exec();
 
 	drvr.then(function(drvr) {
 			if (drvr === null || drvr === undefined) {
-				return req.send("No such driver found");
+				return res.send("No such driver found");
 			}
-			exports.send_car(drvr);
+			return res.send(exports.send_car(drvr));
 		})
 		.catch(function(err) {
 			return res.send(err.message);
@@ -126,6 +135,7 @@ exports.send_car = (driver) => {
 	console.log('Sending car: ', driver.profile.name);
 	driver.enroute = true;
 	driver.save();
+	return JSON.stringify(driver);
 };
 //promises are horrible
 exports.schedule_ride = (req, res) => {
@@ -243,11 +253,11 @@ exports.find_closest_driver = (req, res) => {
 			$maxDistance: distance
 		}
 	}
-	var drivers = Driver.find(query, 'profile', function(err, drv) {
+	var drivers = Driver.find(query, function(err, drv) {
 		if (err) {
 			console.log(err.message);
 		}
-		return res.send(drv);
+		return res.send(JSON.stringify(drv));
 
 	});
 }
@@ -273,11 +283,11 @@ exports.find_closest_user = (req, res) => {
 			$maxDistance: distance
 		}
 	}
-	var users = User.find(query, 'profile', function(err, drv) {
+	var users = User.find(query, function(err, drv) {
 		if (err) {
 			console.log(err.message);
 		}
-		return res.send(drv);
+		return res.send(JSON.stringify(drv));
 
 	});
 }
