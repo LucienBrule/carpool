@@ -159,9 +159,18 @@ app.get('/api/v1/user_info',userController.get_user_info);
 * Carpool api routes
 */
 app.get('/api/v1/version',apiv1Controller.version);
-// app.get('/api/v1/get_drivers',apiv1Controller.get_driver_info);
+app.get('/api/v1/get_drivers',apiv1Controller.get_drivers);
 app.get('/api/v1/schedule_ride',apiv1Controller.schedule_ride);
-app.get('/api/v1/find_closest',apiv1Controller.find_closest);
+app.get('/api/v1/find_closest_driver',apiv1Controller.find_closest_driver);
+app.get('/api/v1/find_closest_user',apiv1Controller.find_closest_driver);
+
+app.get('/api/v1/get_driver_riders',apiv1Controller.get_route_riders);
+app.get('/api/v1/send_car_by_email',apiv1Controller.send_car_by_email);
+app.get('/api/v1/drop_off_car_by_email',apiv1Controller.drop_off_car_by_email);
+
+app.post('/api/dev/emit_event',apiv1Controller.emit_arbitrary_event);
+app.get('/api/dev/assign_rider_to_arbitrary_car',apiv1Controller.assign_rider_to_arbitrary_car);
+
 
 
 /**

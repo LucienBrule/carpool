@@ -68,17 +68,27 @@ exports.post_enroll = (req, res, next) => {
     },
     profile: {
       name: req.body.name,
-      phonenum: req.body.phonenum,
       homelocation: req.body.homelocation,
       numberseats: req.body.numberseats,
     },
-    availible: true
+    phonenum: req.body.phonenum,
+    availible: true,
+    enroute: false,
+    currentseats: req.body.numberseats,
+    minutestotimeout: 4,
+    ridesgiven:0
   });
   console.log("got here");
   console.log(driver);
   console.log(driver.location.coordinates);
   Driver.findOne({
-    email: req.body.email
+    $or: [{
+      profile: {
+        phonenum: req.body.phonenum
+      }
+    }, {
+      'email': req.body.email
+    }]
   }, (err, existingUser) => {
     if (err) {
       return next(err);
@@ -87,7 +97,7 @@ exports.post_enroll = (req, res, next) => {
       req.flash('errors', {
         msg: 'Account with that email address already exists.'
       });
-      return res.redirect('/signup');
+      return res.send("identity already enqueued");
     }
     driver.save((err) => {
       if (err) {
@@ -97,7 +107,7 @@ exports.post_enroll = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+        res.send("success");
       });
     });
   });
