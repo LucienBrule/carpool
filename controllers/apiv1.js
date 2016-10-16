@@ -11,34 +11,47 @@ const version = "0.0.0";
 exports.version = (req, res) => {
 	res.send(version);
 };
+
+//promises are horrible
 exports.schedule_ride = (req, res) => {
-	User.findOne({
-		phonenum: req.query.phonenum
-	}, 'location profile', function(err, usr) {
-		//find closest
-		var distance =1000;
-		var query = {};
+	var pn = req.query.phonenum
+	if (pn === undefined || pn === null) {
+		return req.send("invalid phonenumber");
+	}
+	var usr = User.findOne({
+		phonenum: pn
+	}, 'location profile phonenum').exec();
 
-		query.location = {
-			$near: {
-				$geometry: {
-					type: "Point",
-					coordinates: [usr.location.coordinates[0], usr.location.coordinates[0]]
-				},
-				$maxDistance: distance
+	usr.then(function(usr) {
+
+			console.log(usr.location);
+			var long = usr.location.coordinates[0];
+			var lat = usr.location.coordinates[1];
+
+			var query = {};
+
+			query.location = {
+				$near: {
+					$geometry: {
+						type: "Point",
+						coordinates: [long, lat]
+					},
+					$maxDistance: 1000
+				}
 			}
-		}
-		var drivers = Driver.find(query, 'profile', function(err, drv) {
-			if (err) {
+
+			var drvr = Driver.findOne(query, 'riders').exec();
+
+			drvr.then(function(drvr) {
+				drvr.riders.push(usr.profile.name);
+				console.log(drvr.riders);
+			}).catch(function(err) {
 				console.log(err.message);
-			}
-			console.log(drv.profile);
-			return res.send(drv.profile);
-
+			});
+		})
+		.catch(function(err) {
+			console.log(err.message);
 		});
-		//end find closest
-	});
-
 }
 
 exports.find_closest = (req, res) => {
