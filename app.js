@@ -35,6 +35,7 @@ const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const apiv1Controller = require('./controllers/apiv1');
 const driverController = require('./controllers/driver');
+const mapController = require('./controllers/map');
 
 const schedulerController = require('./controllers/driver');
 
@@ -136,6 +137,7 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+app.get('/')
 
 /**
 *driver enrollment
@@ -170,6 +172,10 @@ app.get('/api/dev/assign_rider_to_arbitrary_car',apiv1Controller.assign_rider_to
 app.get('/api/v1/get_users',apiv1Controller.get_users);
 
 
+/*
+  Carpool map
+*/
+app.get('/map', mapController.map);
 
 /**
  * API examples routes.

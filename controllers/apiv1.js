@@ -49,6 +49,17 @@ module.exports.emit_arbitrary_event = function(req, res) {
 	console.log("Emitting arbitrary event...", req.body.event, req.body.param);
 	return res.send(apiEmmiter.emit(req.body.event, req.body.param));
 }
+
+module.exports._get_drivers = function() {
+	var dprom = Driver.find().exec();
+	return dprom.then(function(drvrs) {
+			return drvrs;
+		})
+		.catch(function(err) {
+			return err;
+		});
+}
+
 module.exports.get_drivers = function(req, res) {
 	var dprom = Driver.find().exec();
 	dprom.then(function(drvrs) {
@@ -58,7 +69,19 @@ module.exports.get_drivers = function(req, res) {
 			res.send(err.message);
 		});
 }
-module.exports.get_users = function {
+
+module.exports._get_users = function () {
+	var dprom = User.find().exec();
+	return dprom.then(function(usrs) {
+			return usrs;
+		})
+		.catch(function(err) {
+			return err;
+		});
+
+}
+
+module.exports.get_users = function (req, res) {
 	var dprom = User.find().exec();
 	dprom.then(function(usrs) {
 			res.send(JSON.stringify(usrs));
