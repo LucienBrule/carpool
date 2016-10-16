@@ -1,5 +1,21 @@
 Facebook messeger send api message format:
 
+BLANK MESSAGE
+{
+  "output": {
+    "text": ""
+  },
+  "context": {
+    "text": "",
+    "quick_replies": "",
+    "response_type": ""
+  }
+}
+
+
+
+
+
 CARPOOL API CALL
 
 

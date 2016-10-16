@@ -39,9 +39,6 @@ const mapController = require('./controllers/map');
 
 const schedulerController = require('./controllers/driver');
 
-
-
-
 /**
  * API keys and Passport configuration.
  */
