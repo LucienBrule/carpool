@@ -11,6 +11,7 @@ const version = "0.0.0";
 class ApiEvenEmmitter extends EventEmitter {}
 const apiEmmiter = new ApiEvenEmmitter();
 
+
 apiEmmiter.on('event', () => {
 	console.log('an event occurred!');
 });
@@ -19,18 +20,18 @@ apiEmmiter.on('test', (param) => {
 });
 apiEmmiter.on('car_full', (driver) => {
 	console.log("car full: ", driver.profile.name);
-	exports.send_car(driver);
+	module.exports.send_car(driver);
 });
 apiEmmiter.on('car_loiter_timeout', (driver) => {
 	console.log("car timeout: ", driver.profile.name);
-	exports.send_car(driver);
+	module.exports.send_car(driver);
 });
 apiEmmiter.on('car_add', (driver) => {
 	driver.minutestotimout += 1;
 	driver.save();
 });
 
-exports.get_route_riders = (req, res) => {
+module.exports.get_route_riders = function(req, res) {
 	var drvr = Driver.findOne({
 		email: req.query.email
 	}).exec();
@@ -44,11 +45,11 @@ exports.get_route_riders = (req, res) => {
 		return res.send(err.message);
 	});
 }
-exports.emit_arbitrary_event = (req, res) => {
+module.exports.emit_arbitrary_event = function(req, res) {
 	console.log("Emitting arbitrary event...", req.body.event, req.body.param);
 	return res.send(apiEmmiter.emit(req.body.event, req.body.param));
 }
-exports.get_drivers = (req, res) => {
+module.exports.get_drivers = function(req, res) {
 	var dprom = Driver.find().exec();
 	dprom.then(function(drvrs) {
 			res.send(JSON.stringify(drvrs));
@@ -57,7 +58,7 @@ exports.get_drivers = (req, res) => {
 			res.send(err.message);
 		});
 }
-exports.assign_rider_to_arbitrary_car = (req, res) => {
+module.exports.assign_rider_to_arbitrary_car = function(req, res) {
 	var drvr = Driver.findOne({
 		email: req.query.d_email
 	}).exec();
@@ -91,11 +92,11 @@ exports.assign_rider_to_arbitrary_car = (req, res) => {
 }
 
 
-exports.version = (req, res) => {
+module.exports.version = function(req, res) {
 	apiEmmiter.emit('test', "hello");
 	res.send(version);
 };
-exports.drop_off_car_by_email = (req, res) => {
+module.exports.drop_off_car_by_email = function(req, res) {
 	var drvr = Driver.findOne({
 		email: req.query.email
 	}).exec();
@@ -116,7 +117,7 @@ exports.drop_off_car_by_email = (req, res) => {
 			return res.send(err.message);
 		});
 }
-exports.send_car_by_email = (req, res) => {
+module.exports.send_car_by_email = function(req, res) {
 	var drvr = Driver.findOne({
 		email: req.query.email
 	}).exec();
@@ -125,20 +126,20 @@ exports.send_car_by_email = (req, res) => {
 			if (drvr === null || drvr === undefined) {
 				return res.send("No such driver found");
 			}
-			return res.send(exports.send_car(drvr));
+			return res.send(module.exports.send_car(drvr));
 		})
 		.catch(function(err) {
 			return res.send(err.message);
 		});
 }
-exports.send_car = (driver) => {
+module.exports.send_car = function(driver) {
 	console.log('Sending car: ', driver.profile.name);
 	driver.enroute = true;
 	driver.save();
 	return JSON.stringify(driver);
 };
 //promises are horrible
-exports.schedule_ride = (req, res) => {
+module.exports.schedule_ride = function(req, res) {
 	var pn = req.query.phonenum
 	if (pn === undefined || pn === null) {
 		return req.send("invalid phonenumber");
@@ -231,7 +232,7 @@ exports.schedule_ride = (req, res) => {
 		});
 }
 
-exports.find_closest_driver = (req, res) => {
+module.exports.find_closest_driver = function(req, res) {
 	console.log(req.query);
 	if ((req.query.lat === undefined) || (req.query.long === undefined)) {
 		return res.send('lat long undefined!');
@@ -261,7 +262,7 @@ exports.find_closest_driver = (req, res) => {
 
 	});
 }
-exports.find_closest_user = (req, res) => {
+module.exports.find_closest_user = function(req, res) {
 	console.log(req.query);
 	if ((req.query.lat === undefined) || (req.query.long === undefined)) {
 		return res.send('lat long undefined!');
