@@ -38,9 +38,6 @@ const driverController = require('./controllers/driver');
 
 const schedulerController = require('./controllers/driver');
 
-
-
-
 /**
  * API keys and Passport configuration.
  */

@@ -76,16 +76,14 @@ exports.post_enroll = (req, res, next) => {
     enroute: false,
     currentseats: req.body.numberseats,
     minutestotimeout: 4,
-    ridesgiven:0
+    ridesgiven: 0
   });
   console.log("got here");
   console.log(driver);
   console.log(driver.location.coordinates);
   Driver.findOne({
     $or: [{
-      profile: {
-        phonenum: req.body.phonenum
-      }
+      phonenum: req.body.phonenum
     }, {
       'email': req.body.email
     }]
