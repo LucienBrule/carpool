@@ -32,6 +32,14 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
     .form-group
+      label.col-sm-3.control-label(for='lat') lat
+      .col-sm-7
+        input.form-control(type='text', name='lat', id='lat', value='42.7296985', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='long') long
+      .col-sm-7
+        input.form-control(type='text', name='long', id='long', value='-73.6921693', autofocus, required)
+    .form-group
       .col-sm-offset-3.col-sm-7
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus

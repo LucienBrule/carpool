@@ -64,7 +64,7 @@ exports.post_enroll = (req, res, next) => {
   const driver = new Driver({
     email: req.body.email,
     location: {
-      coordinates: [req.body.lat, req.body.long]
+      coordinates: [req.body.long, req.body.lat]
     },
     profile: {
       name: req.body.name,

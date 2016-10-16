@@ -11,43 +11,65 @@ const version = "0.0.0";
 exports.version = (req, res) => {
 	res.send(version);
 };
-
 exports.schedule_ride = (req, res) => {
-	var drivers = Driver.findOne({
-		'availible': 'true'
-	}, 'profile', function(err, drv) {
-		if (err) {
-			console.log("error");
+	User.findOne({
+		phonenum: req.query.phonenum
+	}, 'location profile', function(err, usr) {
+		//find closest
+		var distance =1000;
+		var query = {};
+
+		query.location = {
+			$near: {
+				$geometry: {
+					type: "Point",
+					coordinates: [usr.location.coordinates[0], usr.location.coordinates[0]]
+				},
+				$maxDistance: distance
+			}
 		}
-		res.setHeader('Content-Type', 'application/json');
-		res.send(drv);
+		var drivers = Driver.find(query, 'profile', function(err, drv) {
+			if (err) {
+				console.log(err.message);
+			}
+			console.log(drv.profile);
+			return res.send(drv.profile);
+
+		});
+		//end find closest
 	});
-	// console.log(drivers);
-};
+
+}
 
 exports.find_closest = (req, res) => {
-	var query = {};
 	console.log(req.query);
-	if((req.query.lat === undefined) || (req.query.long === undefined)){
+	if ((req.query.lat === undefined) || (req.query.long === undefined)) {
 		return res.send('lat long undefined!');
 	}
+	var distance;
+	if (req.query.distance === undefined) {
+		distance = 1000;
+	} else {
+		distance = req.query.distance;
+	}
+	var query = {};
+
 	query.location = {
 		$near: {
 			$geometry: {
 				type: "Point",
-				coordinates: [req.query.lat, req.query.long]
+				coordinates: [req.query.long, req.query.lat]
 			},
-			$maxDistance: 1000
+			$maxDistance: distance
 		}
 	}
 	var drivers = Driver.find(query, 'profile', function(err, drv) {
 		if (err) {
 			console.log(err.message);
 		}
-		res.setHeader('Content-Type', 'application/json');
-		res.send(drv);
+		return res.send(drv);
+
 	});
-	return drv;
 }
 
 //route handlers for rides

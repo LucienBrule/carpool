@@ -49,17 +49,20 @@ exports.post_enroll = (req, res, next) => {
 
   const user = new User({
     email: req.body.email,
+    location: {
+      coordinates: [req.body.long, req.body.lat]
+    },
+    phonenum: req.body.phonenum,
     profile: {
       name: req.body.name,
       location: req.body.location,
-      phonenum: req.body.phonenum
     },
     scheduled: false
   });
   console.log("we get here =========== ");
   // console.log(User.findOne());
   User.findOne({
-    'profile.phonenum':req.body.phonenum
+    'profile.phonenum': req.body.phonenum
   }, (err, existingUser) => {
     if (err) {
       return next(err);
@@ -85,7 +88,7 @@ exports.post_enroll = (req, res, next) => {
 };
 
 exports.get_user_info = (req, res) => {
-res.send("tryna get info");
+  res.send("tryna get info");
 };
 
 /**

@@ -32,12 +32,13 @@ const DriverSchema = new mongoose.Schema({
   availible: Boolean,
   timebegin: String,
   timeend: String,
-  riders: [String]
+  riders: []
 }, {
+  collection:'driver',
   timestamps: true
 });
 
-// DriverSchema.index({ location : '2dsphere' });
+DriverSchema.index({ location : '2dsphere' });
 
 /**
  * Password hash middleware.
