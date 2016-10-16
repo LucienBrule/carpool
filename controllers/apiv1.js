@@ -48,19 +48,14 @@ exports.emit_arbitrary_event = (req, res) => {
 	console.log("Emitting arbitrary event...", req.body.event, req.body.param);
 	return res.send(apiEmmiter.emit(req.body.event, req.body.param));
 }
-
-exports._get_drivers = () =>{
+exports.get_drivers = (req, res) => {
 	var dprom = Driver.find().exec();
 	dprom.then(function(drvrs) {
-			return(drvrs);
+			res.send(JSON.stringify(drvrs));
 		})
 		.catch(function(err) {
-			return(err.message);
+			res.send(err.message);
 		});
-}
-
-exports.get_drivers = (req, res) => {
-	res.send(JSON.stringify(_get_drivers()));
 }
 exports.assign_rider_to_arbitrary_car = (req, res) => {
 	var drvr = Driver.findOne({
