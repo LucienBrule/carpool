@@ -62,16 +62,22 @@ exports.post_enroll = (req, res, next) => {
   console.log("we get here =========== ");
   // console.log(User.findOne());
   User.findOne({
-    'profile.phonenum': req.body.phonenum
+    $or: [{
+      profile: {
+        phonenum: req.body.phonenum
+      }
+    }, {
+      'email': req.body.email
+    }]
   }, (err, existingUser) => {
     if (err) {
       return next(err);
     }
     if (existingUser) {
       req.flash('errors', {
-        msg: 'This number is currently enqued.'
+        msg: 'This identity is already enqueued.'
       });
-      return res.redirect('/signup');
+      return res.send("This identity is already enqueued.");
     }
     user.save((err) => {
       if (err) {

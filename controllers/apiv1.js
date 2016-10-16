@@ -5,13 +5,32 @@ const validator = require('validator');
 const request = require('request');
 const Driver = require('../models/Driver.js');
 const User = require('../models/User.js');
+const EventEmitter = require('events');
+
+class ApiEvenEmmitter extends EventEmitter {}
+const apiEmmiter = new ApiEvenEmmitter();
+
+apiEmmiter.on('event', () => {
+	console.log('an event occurred!');
+});
+apiEmmiter.on('test', (param) => {
+	console.log('We saw the event!', param);
+});
+apiEmmiter.on('car_full', (driver) => {
+	console.log('Sending car', driver.profile.name);
+});
+apiEmmiter.on('car_loiter_timeout', (driver) => {
+	console.log('We saw the event!', param);
+});
+
+
 
 const version = "0.0.0";
 
 exports.version = (req, res) => {
+	apiEmmiter.emit('test', "hello");
 	res.send(version);
 };
-
 //promises are horrible
 exports.schedule_ride = (req, res) => {
 	var pn = req.query.phonenum
@@ -72,6 +91,8 @@ exports.schedule_ride = (req, res) => {
 					usr.scheduled = true;
 					if (drvr.riders.length == drvr.profile.numberseats) {
 						drvr.availible = false;
+						apiEmmiter.emit('car_full', drvr.id);
+
 					}
 					drvr.save(function(err) {
 						if (err) return res.send(err.message);

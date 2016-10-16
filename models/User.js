@@ -35,12 +35,15 @@ const userSchema = new mongoose.Schema({
     location: String,
     website: String,
     picture: String,
-    phonenum: String,
+    phonenum: {
+      type: String,
+      unique: true
+    },
     numberpeople: Number
 
   }
 }, {
-  collection:'user',
+  collection: 'user',
   timestamps: true
 });
 userSchema.index({
