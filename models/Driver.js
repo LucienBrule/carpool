@@ -17,25 +17,27 @@ const DriverSchema = new mongoose.Schema({
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  phonenum: {
+    type: String,
+    unique: true
+  },
 
   facebook: String,
   tokens: Array,
   profile: {
     name: String,
-    location: String,
     picture: String,
-    phonenum: {
-      type: String,
-      unique: true
-    },
     homelocation: String,
     location: String,
     numberseats: Number
   },
   availible: Boolean,
+  enroute:Boolean,
   timebegin: String,
   timeend: String,
-  riders: []
+  riders: [],
+  currentseats:Number,
+  ridesgiven:Number
 }, {
   collection: 'driver',
   timestamps: true

@@ -18,6 +18,7 @@ apiEmmiter.on('test', (param) => {
 });
 apiEmmiter.on('car_full', (driver) => {
 	console.log('Sending car', driver.profile.name);
+	
 });
 apiEmmiter.on('car_loiter_timeout', (driver) => {
 	console.log('We saw the event!', param);
@@ -68,7 +69,7 @@ exports.schedule_ride = (req, res) => {
 				}
 			}
 
-			var drvr = Driver.findOne(query, 'riders profile availible').exec();
+			var drvr = Driver.findOne(query).exec();
 
 			drvr.then(function(drvr) {
 				if (drvr === undefined || drvr == null) {

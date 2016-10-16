@@ -38,9 +38,10 @@ const userSchema = new mongoose.Schema({
     location: String,
     website: String,
     picture: String,
-    numberpeople: Number
 
-  }
+  },
+  numberpeople: Number
+
 }, {
   collection: 'user',
   timestamps: true
