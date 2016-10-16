@@ -58,8 +58,14 @@ exports.post_enroll = (req, res, next) => {
       time_end:String,
       home_location:String,
       number_seats:Number*/
+  // console.log(req.body);
+  // console.log("lat long:");
+  // console.log(req.body.lat, req.body.long);
   const driver = new Driver({
     email: req.body.email,
+    location: {
+      coordinates: [req.body.lat, req.body.long]
+    },
     profile: {
       name: req.body.name,
       phonenum: req.body.phonenum,
@@ -68,7 +74,9 @@ exports.post_enroll = (req, res, next) => {
     },
     availible: true
   });
-
+  console.log("got here");
+  console.log(driver);
+  console.log(driver.location.coordinates);
   Driver.findOne({
     email: req.body.email
   }, (err, existingUser) => {

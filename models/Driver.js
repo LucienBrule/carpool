@@ -3,6 +3,13 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 
 const DriverSchema = new mongoose.Schema({
+  location: {
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: [Number]
+  },
   email: {
     type: String,
     unique: true
@@ -29,6 +36,8 @@ const DriverSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+// DriverSchema.index({ location : '2dsphere' });
 
 /**
  * Password hash middleware.

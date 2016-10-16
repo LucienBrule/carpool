@@ -160,6 +160,8 @@ app.get('/api/v1/user_info',userController.get_user_info);
 app.get('/api/v1/version',apiv1Controller.version);
 // app.get('/api/v1/get_drivers',apiv1Controller.get_driver_info);
 app.get('/api/v1/schedule_ride',apiv1Controller.schedule_ride);
+app.get('/api/v1/find_closest',apiv1Controller.find_closest);
+
 
 /**
  * API examples routes.
