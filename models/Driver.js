@@ -3,44 +3,49 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 
 const DriverSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
+  email: {
+    type: String,
+    unique: true
+  },
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
 
   facebook: String,
-  twitter: String,
-  google: String,
-  github: String,
-  instagram: String,
-  linkedin: String,
-  steam: String,
   tokens: Array,
-
   profile: {
     name: String,
-    gender: String,
     location: String,
-    website: String,
     picture: String,
-    phonenum:String,
-    location:String,
-    time_begin:String,
-    time_end:String,
-    home_location:String
-  }
-}, { timestamps: true });
+    phonenum: String,
+    homelocation: String,
+    location: String,
+    numberseats: Number
+  },
+  availible: Boolean,
+  timebegin: String,
+  timeend: String,
+  riders: [String]
+}, {
+  timestamps: true
+});
 
 /**
  * Password hash middleware.
  */
-DriverSchema.pre('save', function (next) {
+DriverSchema.pre('save', function(next) {
   const Driver = this;
-  if (!Driver.isModified('password')) { return next(); }
+  if (!Driver.isModified('password')) {
+    return next();
+  }
   bcrypt.genSalt(10, (err, salt) => {
-    if (err) { return next(err); }
+    if (err) {
+      return next(err);
+    }
     bcrypt.hash(Driver.password, salt, null, (err, hash) => {
-      if (err) { return next(err); }
+      if (err) {
+        return next(err);
+      }
       Driver.password = hash;
       next();
     });
@@ -50,7 +55,7 @@ DriverSchema.pre('save', function (next) {
 /**
  * Helper method for validating Driver's password.
  */
-DriverSchema.methods.comparePassword = function (candidatePassword, cb) {
+DriverSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     cb(err, isMatch);
   });
@@ -59,7 +64,7 @@ DriverSchema.methods.comparePassword = function (candidatePassword, cb) {
 /**
  * Helper method for getting Driver's gravatar.
  */
-DriverSchema.methods.gravatar = function (size = 200) {
+DriverSchema.methods.gravatar = function(size = 200) {
   if (!this.email) {
     return `https://gravatar.com/avatar/?s=${size}&d=retro`;
   }

@@ -34,6 +34,11 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const apiv1Controller = require('./controllers/apiv1');
+const driverController = require('./controllers/driver');
+
+const schedulerController = require('./controllers/driver');
+
+
 
 
 /**
@@ -135,10 +140,26 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 /**
+*driver enrollment
+*/
+app.get('/api/v1/enroll_driver',driverController.get_enroll);
+app.post('/api/v1/enroll_driver',driverController.post_enroll);
+app.get('/api/v1/driver_info',driverController.get_driver_info);
+
+
+/**
+*user enrollment
+*/
+app.get('/api/v1/enroll_user',userController.get_enroll);
+app.post('/api/v1/enroll_user',userController.post_enroll);
+app.get('/api/v1/user_info',userController.get_user_info);
+
+/**
 * Carpool api routes
 */
 app.get('/api/v1/version',apiv1Controller.version);
-app.get('/api/v1/getDrivers',apiv1Controller.getDrivers);
+// app.get('/api/v1/get_drivers',apiv1Controller.get_driver_info);
+app.get('/api/v1/schedule_ride',apiv1Controller.schedule_ride);
 
 /**
  * API examples routes.

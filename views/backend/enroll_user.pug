@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Sign up
+  form.form-horizontal(id='signup-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='name') name
+      .col-sm-7
+        input.form-control(type='text', name='name', id='name', placeholder='name', required)
+    .form-group
+      label.col-sm-3.control-label(for='usage') usage
+      .col-sm-7
+        input-group
+          select.form-control.text-center(name="usage")
+            option.text-center="User"
+    .form-group
+      label.col-sm-3.control-label(for='phonenum') phone number
+      .col-sm-7
+        input.form-control(type='text', name='phonenum', id='phonenum', value='5555555555', required)
+    .form-group
+      label.col-sm-3.control-label(for='location') location
+      .col-sm-7
+        input.form-control(type='text', name='location', id='location', value='42.7296985,-73.6921693', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='numberpeople') number of people
+      .col-sm-7
+        input.form-control(type='number', name='numberpeople', id='numberpeople', value='1', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='email') Email
+      .col-sm-7
+        input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Signup
