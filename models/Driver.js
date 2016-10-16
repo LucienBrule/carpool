@@ -37,7 +37,8 @@ const DriverSchema = new mongoose.Schema({
   timeend: String,
   riders: [],
   currentseats:Number,
-  ridesgiven:Number
+  ridesgiven:Number,
+  minutestotimeout:Number,
 }, {
   collection: 'driver',
   timestamps: true

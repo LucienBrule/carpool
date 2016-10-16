@@ -68,11 +68,14 @@ exports.post_enroll = (req, res, next) => {
     },
     profile: {
       name: req.body.name,
-      phonenum: req.body.phonenum,
       homelocation: req.body.homelocation,
       numberseats: req.body.numberseats,
     },
-    availible: true
+    phonenum: req.body.phonenum,
+    availible: true,
+    enroute: false,
+    currentseats: req.body.numberseats,
+    minutestotimeout: 4
   });
   console.log("got here");
   console.log(driver);
@@ -103,7 +106,7 @@ exports.post_enroll = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+        res.send("success");
       });
     });
   });

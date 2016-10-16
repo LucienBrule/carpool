@@ -88,7 +88,7 @@ exports.post_enroll = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+        res.send("success");
       });
     });
   });
