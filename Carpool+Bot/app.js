@@ -118,6 +118,13 @@ function readContext(sender, message) {
                 });
         }).catch(function(error) {
             //no context saved
+            requestify.post('http://example.com', {
+                hello: 'world'
+            })
+            .then(function(response) {
+                // Get the response body
+                response.getBody();
+            });
             return processContextMessage(sender, {}, message);
         });
 }
@@ -147,10 +154,9 @@ function processContextMessage(sender, context, message) {
             googleMapsClient.reverseGeocode({
                 latlng: [lat, lng]
             }, function(errorRep, response) {
-              handleGeocode(errorRep, response, sender, context, message.text, messageAddOn);
+              handleGeocode(response, sender, context, message.text, messageAddOn);
             });
         } else {
-            console.log("geocode");
             // Geocode an address
             var geocodeRequestData = {
                 address: message.text,
@@ -162,7 +168,7 @@ function processContextMessage(sender, context, message) {
                 geocodeRequestData.components.locality = process.env.GOOGLE_MAPS_LOCALITY;
             }
             googleMapsClient.geocode(geocodeRequestData, function(errorRep, response) {
-              handleGeocode(errorRep, response, sender, context, message.text, messageAddOn);
+              handleGeocode(response, sender, context, message.text, messageAddOn);
             });
         }
 
@@ -172,16 +178,16 @@ function processContextMessage(sender, context, message) {
     }
 }
 
-function handleGeocode(errorRep, response, sender, context, text, messageAddOn) {
-    if (!errorRep && response.json.status == "OK") {
-        var geocodeResult = response.json.result[0];
-        messageAddOn.pick_up_location = {
-            formatted_address: geocodeResult.formatted_address,
-            lat: geocodeResult.geometry.location.lat,
-            lng: geocodeResult.geometry.location.lng,
-            place_id: geocodeResult.place_id
-        };
-    }
+function handleGeocode(response, sender, context, text, messageAddOn) {
+      var geocodeResult = response.json.results[0];
+      console.log(JSON.stringify(geocodeResult));
+
+      messageAddOn.pick_up_location = {
+          "formatted_address": geocodeResult.formatted_address,
+          "lat": geocodeResult.geometry.location.lat,
+          "lng": geocodeResult.geometry.location.lng,
+          "place_id": geocodeResult.place_id
+      };
     context.response_type = 'correct_pick_up_location';
     console.log("HERE");
     messageWatson(sender, context, text, messageAddOn);
@@ -220,6 +226,8 @@ function sendMessage(sender, data, messageAddOn) {
           messageAddOn.pick_up_location) {
         var lat = messageAddOn.pick_up_location.lat;
         var lng = messageAddOn.pick_up_location.lng;
+        item_url = "https://www.google.com/maps/preview/@" + lat + "," + lng + ",17z";
+        image_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lng + ",&zoom=17&scale=1&size=560x292&maptype=terrain&format=png&key=" + GOOGLE_MAPS_API_KEY;
         messageData.attachment = {
             "type": "template",
             "payload": {
@@ -227,9 +235,9 @@ function sendMessage(sender, data, messageAddOn) {
                 "elements": {
                     "element": {
                         "title": messageAddOn.pick_up_location.formatted_address,
-                        "item_url": "https://www.google.com/maps/preview/@" + lat + "," + lng + ",17z",
-                        "image_url": "https://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lng + ",&zoom=17&scale=1&size=560x292&maptype=terrain&format=png&key=" + GOOGLE_MAPS_API_KEY
-                    }
+                        "item_url": item_url,
+                        "image_url": image_url
+                      }
                 }
             }
         };
