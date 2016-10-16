@@ -1,0 +1,57 @@
+Facebook messeger send api message format:
+
+CARPOOL API CALL
+
+
+TEXT
+{"text":"Pick a color:"}
+
+
+QUICK REPLIES
+Text only:
+'{
+  "text":"Pick a color:",
+  "quick_replies":[
+    {
+      "content_type":"text",
+      "title":"Red",
+      "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+    },
+    {
+      "content_type":"text",
+      "title":"Green",
+      "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+    }
+  ]
+}'
+
+Text & image
+'{
+  "text":"Pick a color:",
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Red",
+        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED",
+        "image_url":"http://petersfantastichats.com/img/red.png"
+      },
+      {
+        "content_type":"text",
+        "title":"Green",
+        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN",
+        "image_url":"http://petersfantastichats.com/img/green.png"
+      }
+    ]
+}'
+
+Location quick reply:
+'{
+  "text":"Where would you like to be picked up?",
+      "quick_replies":[
+        {
+          "content_type":"location"
+        }
+      ]
+}'
+
+{"text":"Where would you like to be picked up?","quick_replies":[{"content_type":"location"}]}
