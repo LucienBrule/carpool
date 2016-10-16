@@ -6,12 +6,15 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "@google/maps": "^0.2.1",
     "bluemix-objectstorage": "^0.1.2",
     "body-parser": "^1.15.0",
     "cfenv": "1.0.x",
     "dotenv": "^2.0.0",
+    "exec": "^0.2.1",
     "express": "^4.13.4",
     "request": "2.72.0",
+    "requestify": "^0.2.4",
     "watson-developer-cloud": "^2.6.0"
   },
   "repository": {},
