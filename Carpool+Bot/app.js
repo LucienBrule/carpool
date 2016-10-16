@@ -230,7 +230,7 @@ function sendMessage(sender, data, messageAddOn) {
         var lat = messageAddOn.pick_up_location.lat;
         var lng = messageAddOn.pick_up_location.lng;
         item_url = "https://www.google.com/maps/preview/@" + lat + "," + lng + ",17z";
-        image_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lng + ",&zoom=17&scale=1&size=560x292&maptype=terrain&format=png&key=" + process.env.GOOGLE_MAPS_API_IMAGE;
+        image_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=17&scale=1&size=560x292&maptype=terrain&format=png&key=" + process.env.GOOGLE_MAPS_API_IMAGE;
         messageData.attachment = {
             "type": "template",
             "payload": {
