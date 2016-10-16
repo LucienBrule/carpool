@@ -55,18 +55,12 @@ exports._get_drivers = () =>{
 			return(drvrs);
 		})
 		.catch(function(err) {
-			return(err);
+			return(err.message);
 		});
 }
 
 exports.get_drivers = (req, res) => {
-	var dprom = Driver.find().exec();
-	dprom.then(function(drvrs) {
-			res.send(JSON.stringify(drvrs));
-		})
-		.catch(function(err) {
-			res.send(err.message);
-		});
+	res.send(JSON.stringify(_get_drivers()));
 }
 exports.assign_rider_to_arbitrary_car = (req, res) => {
 	var drvr = Driver.findOne({
