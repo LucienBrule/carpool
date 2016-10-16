@@ -20,9 +20,14 @@ exports.schedule_ride = (req, res) => {
 	}
 	var usr = User.findOne({
 		phonenum: pn
-	}, 'location profile phonenum').exec();
+	}, 'location profile phonenum scheduled').exec();
 
 	usr.then(function(usr) {
+			if (!((usr.scheduled === null) || (usr.scheduled === undefined))) {
+				if (usr.scheduled) {
+					return res.send("user already scheduled for a ride");
+				}
+			}
 
 			console.log(usr.location);
 			var long = usr.location.coordinates[0];
@@ -30,6 +35,7 @@ exports.schedule_ride = (req, res) => {
 
 			var query = {};
 
+			query.availible = true;
 			query.location = {
 				$near: {
 					$geometry: {
@@ -40,11 +46,51 @@ exports.schedule_ride = (req, res) => {
 				}
 			}
 
-			var drvr = Driver.findOne(query, 'riders').exec();
+			var drvr = Driver.findOne(query, 'riders profile availible').exec();
 
 			drvr.then(function(drvr) {
-				drvr.riders.push(usr.profile.name);
-				console.log(drvr.riders);
+				if (drvr === undefined || drvr == null) {
+					console.log("no driver found");
+					return res.send("no driver could be located");
+				}
+				if (drvr.riders === null || drvr.riders === undefined) {
+					drvr.riders.push(usr.profile.name);
+					usr.scheduled = true;
+					drvr.save(function(err) {
+						if (err) return res.send(err.message);
+						console.log("saved!");
+					});
+					usr.save(function(err) {
+						if (err) return res.send(err.message);
+						console.log("saved!");
+					});
+					console.log(drvr.riders);
+					return res.send("success");
+				}
+				if (drvr.riders.length < drvr.profile.numberseats) {
+					drvr.riders.push(usr.profile.name);
+					usr.scheduled = true;
+					if (drvr.riders.length == drvr.profile.numberseats) {
+						drvr.availible = false;
+					}
+					drvr.save(function(err) {
+						if (err) return res.send(err.message);
+						console.log("saved!");
+					});
+					usr.save(function(err) {
+						if (err) return res.send(err.message);
+						console.log("saved!");
+					});
+
+					console.log(drvr.riders);
+					return res.send("success");
+				} else {
+					console.log("invalid match formed, retry request");
+					console.log(drvr.riders, drvr.riders.length, drvr.profile.numberseats);
+					return res.send("failed to add user to ride, try again");
+					drvr.availible = false;
+
+				}
 			}).catch(function(err) {
 				console.log(err.message);
 			});

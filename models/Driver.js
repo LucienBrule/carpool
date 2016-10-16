@@ -24,7 +24,10 @@ const DriverSchema = new mongoose.Schema({
     name: String,
     location: String,
     picture: String,
-    phonenum: String,
+    phonenum: {
+      type: String,
+      unique: true
+    },
     homelocation: String,
     location: String,
     numberseats: Number
@@ -34,11 +37,13 @@ const DriverSchema = new mongoose.Schema({
   timeend: String,
   riders: []
 }, {
-  collection:'driver',
+  collection: 'driver',
   timestamps: true
 });
 
-DriverSchema.index({ location : '2dsphere' });
+DriverSchema.index({
+  location: '2dsphere'
+});
 
 /**
  * Password hash middleware.
