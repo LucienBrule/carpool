@@ -49,23 +49,24 @@ exports.post_enroll = (req, res, next) => {
 
   const user = new User({
     email: req.body.email,
+    phonenum: req.body.phonenum,
+
     location: {
       coordinates: [req.body.long, req.body.lat]
     },
-    phonenum: req.body.phonenum,
     profile: {
       name: req.body.name,
       location: req.body.location,
+
     },
     scheduled: false
   });
-  console.log("we get here =========== ");
   // console.log(User.findOne());
   User.findOne({
     $or: [{
-      profile: {
-        phonenum: req.body.phonenum
-      }
+
+      phonenum: req.body.phonenum
+
     }, {
       'email': req.body.email
     }]

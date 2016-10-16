@@ -38,10 +38,13 @@ exports.schedule_ride = (req, res) => {
 		return req.send("invalid phonenumber");
 	}
 	var usr = User.findOne({
-		phonenum: pn
+			"phonenum": pn
 	}, 'location profile phonenum scheduled').exec();
 
 	usr.then(function(usr) {
+		if(usr === null || usr === undefined){
+			return res.send("no such user found");
+		}
 			if (!((usr.scheduled === null) || (usr.scheduled === undefined))) {
 				if (usr.scheduled) {
 					return res.send("user already scheduled for a ride");
@@ -91,7 +94,7 @@ exports.schedule_ride = (req, res) => {
 					usr.scheduled = true;
 					if (drvr.riders.length == drvr.profile.numberseats) {
 						drvr.availible = false;
-						apiEmmiter.emit('car_full', drvr.id);
+						apiEmmiter.emit('car_full', drvr);
 
 					}
 					drvr.save(function(err) {

@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
   steam: String,
   tokens: Array,
   scheduled: Boolean,
-  phonenum: String,
+  phonenum: {
+    type: String,
+    unique: true
+  },
 
   profile: {
     name: String,
@@ -35,10 +38,6 @@ const userSchema = new mongoose.Schema({
     location: String,
     website: String,
     picture: String,
-    phonenum: {
-      type: String,
-      unique: true
-    },
     numberpeople: Number
 
   }
