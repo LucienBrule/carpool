@@ -1,0 +1,114 @@
+html,
+body,
+#content-container,
+#mapid {
+    height: 100vh;
+    width: 100vw;
+    padding: 0px;
+    margin: 0px;
+    /*    background-color: black;
+*/
+}
+
+a:hover {
+    background-color: lightgray;
+}
+
+a:active {
+    background-color: gray;
+}
+
+
+/*creds to this codepen for the leaflet divicon
+http://codepen.io/gisminister/pen/Hdorv
+*/
+
+.driver-icon-div div.icon {
+    position: relative;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-color: rgba(200, 200, 200, .7);
+    width: 50px;
+    /*Same as marker width*/
+    height: 50px;
+    /*Same as marker height*/
+    line-height: 12px;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+
+.no-break {
+    white-space: nowrap;
+}
+
+.driver-icon {
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(50, 150, 200, 0.5);
+    /* 10% opaque red */
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-top: -35px;
+    /*Shift by arrow top+height*/
+    margin-left: -3px;
+    /*Shift by half the marker width*/
+}
+
+.driver-icon-div div.icon-arrow {
+    position: relative;
+    border-style: solid;
+    border-color: #444 transparent transparent transparent;
+    border-width: 10px 6px 0 6px;
+    /*Arrow w/h is defined by the borders*/
+    left: 20px;
+    /*(Marker width - arrow width)/2*/
+    width: 0px;
+    height: 0px;
+}
+
+.col {
+    /*background-color: red;*/
+    padding: 0px !important;
+}
+
+.no-padding {
+    margin: 0px;
+    padding: 0px !important;
+    margin: 0px !important;
+    border-width: 0px !important;
+}
+
+#driverlist {
+    overflow-x: scroll;
+}
+
+#cardstack {
+    padding: 0px;
+    overflow-y: scroll;
+    font-size: 4px!important;
+    width: 5em;
+    height: 100%;
+}
+
+#mapid {
+    left: 0px;
+    z-index: 0!important;
+    position: absolute;
+}
+
+#container {
+    position: relative;
+}
+
+#content-container {
+    position: relative;
+    z-index: 1 !important;
+    height: 100vh;
+    width: 100vw;
+    /*background-color: red;*/
+}

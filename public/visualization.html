@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>vis</title>
+    <link rel="stylesheet" href="./css/visualization.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.1/css/ionic.min.css">
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div class="bar bar-header bar-stable">
+            <h1 class="title">Driver Visualization</h1>
+        </div>
+        <!-- This is where the map goes -->
+        <div id="mapid"></div>
+        <br>
+        <br>
+        <div id="content-container">
+            <div class="row">
+                <div class="col col-90 ">
+                    <div class="no-padding cardstack" style="background-color: transparent;">
+                        <div class="button-bar list-inset" id="driverlist" style="background-color: transparent;">
+                            <!-- <div class="item item-avatar">
+                                <img src="car-icon.png">
+                                <h2>shortname</h2>
+                                <p>👩👱👩👱</p>
+                            </div>
+                            <div class="item item-avatar">
+                                <img src="car-icon.png">
+                                <h2>shortname</h2>
+                                <p>👩👱👩👱</p>
+                            </div>
+                            <div class="item item-avatar">
+                                <img src="car-icon.png">
+                                <h2>shortname</h2>
+                                <p>👩👱👩👱</p>
+                            </div>
+                            <div class="item item-avatar">
+                                <img src="car-icon.png">
+                                <h2>shortname</h2>
+                                <p>👩👱👩👱</p>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-10 "></div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-10 "></div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-10 "></div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-10 "></div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-10 "></div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-10 "></div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-10 ">
+                </div>
+                <div class="col col-10 col-offset-80"></div>
+            </div>
+            <div class="row">
+                <div class="col col-33"></div>
+                <div class="col col-33 col-offset-33"></div>
+            </div>
+            <div class="row">
+                <div class="col col-33"></div>
+                <div class="col col-33 col-offset-33"></div>
+            </div>
+            <div class="row">
+                <div class="col col-33 ">
+                    <!-- <div id = "cardstack " class="card"> -->
+                    <!-- </div> -->
+                </div>
+                <div class="col col-10 col-offset-33"></div>
+            </div>
+            <div class="col col-33 col-offset-33"></div>
+        </div>
+        <div class="row">
+            <div class="col col-33"> <a class="button button-outline button-positive padding-left">
+                        Outlined Button
+                    </a></div>
+            <div class="col col-33 col-offset-33"></div>
+        </div>
+        <div class="row">
+            <div class="col col-33"></div>
+            <div class="col col-33 col-offset-33"></div>
+        </div>
+        <div class="row">
+            <div class="col col-33"></div>
+            <div class="col col-33 col-offset-33"></div>
+        </div>
+        <div class="row">
+            <div class="col col-33"></div>
+            <div class="col col-33 col-offset-33"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/visualization.js"></script>
+    <script type="text/javascript" src="./js/AnimatedMarker.js"></script>
+
+</html>

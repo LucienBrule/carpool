@@ -16,10 +16,11 @@ exports.map = (req, res) => {
 		var driverlngs;
 		var driveremls;
 		dr.forEach(function(driver) {
+			console.log("woot");
 			console.log(driver);
-			driverlngs = driver.location.coordinates[0] + ",";
-			driverlats = driver.location.coordinates[1] + ",";
-			driveremls = driver.email + ",";
+			driverlngs = driver.location.coordinates[0];
+			driverlats = driver.location.coordinates[1];
+			driveremls = driver.email;
 		});
 
 		var users = getusers();
@@ -29,8 +30,8 @@ exports.map = (req, res) => {
 			var useremls;
 			usr.forEach(function(user) {
 				console.log(user);
-				userlngs = user.location.coordinates[1] + ",";
-				userlats = user.location.coordinates[0] + ",";
+				userlngs = user.location.coordinates[1];
+				userlats = user.location.coordinates[0];
 				useremls = user.email + ",";
 			});
 
